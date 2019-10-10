@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "express": "^4.17.1",
+    "geojson": "^0.5.0",
+    "geojson-dijkstra": "^1.0.4",
+    "geolib": "^3.0.4",
+    "graphs-adt": "^0.1.9",
+    "https": "^1.0.0",
+    "mapbox-gl": "^1.4.0"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}

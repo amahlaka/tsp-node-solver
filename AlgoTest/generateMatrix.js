@@ -2,6 +2,8 @@ var request = require('request');
 var geolib = require('geolib');
 var GeoJSON = require('geojson');
 var solver = require('node-tspsolver');
+var GreatCircle = require('great-circle');
+
 
 class geoPointData{
     constructor(name, lat, long, index){
@@ -73,6 +75,7 @@ function getMatrix(citylist){
     var optimalPath = [];
     var pathCoords = [];
     var matrix = [];
+    var geojsonlist = [];
     for(entry in citylist){
         matrix.push(citylist[entry].costMatrix);
     }
@@ -83,6 +86,7 @@ function getMatrix(citylist){
             optimalPath.push(pointName);
             var cityLoc =  {"lat":citylist[result[point]].lat,"lon":citylist[result[point]].long};
             pathCoords.push(cityLoc);
+            geojsonlist.push([citylist[result[point]].lat,citylist[result[point]].long])
             console.log(cityLoc);
         }
         var optimalLength = geolib.getPathLength(pathCoords,function(point,dest){
@@ -107,7 +111,7 @@ function sendData(distance,order){
     "seed":seed
     }
     console.log(json);
-    request.post('https://api-staging.vello.fi/nutcracker/return-task',{
+    /*request.post('https://api-staging.vello.fi/nutcracker/return-task',{
         json:json
     }, (error, res, body) => {
         if (error) {
@@ -117,8 +121,11 @@ function sendData(distance,order){
         console.log(`statusCode: ${res.statusCode}`)
         console.log(body)
         console.log()
-      }); 
+      }); */
  }
 
 
 
+
+
+ 

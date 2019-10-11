@@ -10,14 +10,21 @@ function calculateAllDistances(listOfMapPoints){
 
         for(var secondaryPointIndex in listOfMapPoints){
             var secondaryMapPoint = listOfMapPoints[secondaryPointIndex];
+            var secondaryCityIndex = secondaryMapPoint.index;
+            var cityName = secondaryMapPoint.name;
             var endLocation = secondaryMapPoint.position;
-            var circleDistance = getDistance(startLocation,endLocation);
-            
+            if(cityIndex==secondaryCityIndex){
+                circleDistance=0;
+            }
+            else{
+                var circleDistance = getDistance(startLocation,endLocation);
+            }
+            mapPoint.distances.push(circleDistance);
+            mapPoint.distanceDict[String(cityName)] = circleDistance;
         }
     }
 
 }
-
 
 function getDistance({"lat":lat1,"lon":lon1},{"lat":lat2,"lon":lon2}) {
     var r = 6378137;
@@ -31,4 +38,22 @@ function getDistance({"lat":lat1,"lon":lon1},{"lat":lat2,"lon":lon2}) {
     var angle = Math.atan2(Math.sqrt(a) , b);
     
     return angle * r;
+}
+
+function calculatePath(path,listOfMapPoints){
+    var totalDistance = 0;
+    for(var waypoint in path){
+        var waypointIndex = path[waypoint];
+        var mapPoint = listOfMapPoints[waypointIndex];
+        var nextPoint = listOfMapPoints[path[Number(waypoint)+1]]
+        var distance = getDistance(mapPoint.position,nextPoint.position)
+        totalDistance = totalDistance+distance;
+        if(Number(path[Number(waypoint)+1]) == Number(listOfMapPoints.length)-1){
+            break;
+        }
+    }
+    console.log(totalDistance);
+
+
+
 }

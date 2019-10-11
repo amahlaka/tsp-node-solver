@@ -15,13 +15,9 @@ class geoPointData{
             console.debug(this);
         }
     }
-    appendMatrix(index,cost,name){
-            this.costMatrix.push(cost);
-            this.nameMatrix.push({"name":name,"distance":cost})
-    }
 
 }
 
-module.exports = {
+export default {
     geoPointData
 }

@@ -19,8 +19,12 @@ function calculateAllDistances(listOfMapPoints){
             else{
                 var circleDistance = getDistance(startLocation,endLocation);
             }
+            if(circleDistance == 0.1){
+                circleDistance = 0;
+            }
             mapPoint.distances.push(circleDistance);
-            mapPoint.distanceDict[String(cityName)] = circleDistance;
+            mapPoint.distanceDict[String(cityName)] = Number(circleDistance.toFixed(2));
+            //console.log("Distance between " +  mapPoint.name + " and " + cityName + " is: " + circleDistance + " Meters.")
         }
     }
 
@@ -52,8 +56,37 @@ function calculatePath(path,listOfMapPoints){
             break;
         }
     }
-    console.log(totalDistance);
-
+    //console.log(totalDistance);
+    return totalDistance;
 
 
 }
+
+function altPath(path,listOfMapPoints){
+    var totalDistance = 0;
+    var pathLength = path.length;
+    for(var waypoint in path){
+        if(Number(waypoint) == pathLength-1){
+            //console.log("done");
+            break;
+        }
+        var waypointIndex = path[waypoint];
+
+        var mapPoint = listOfMapPoints[waypointIndex];
+
+        var nextPoint = listOfMapPoints[path[Number(waypoint)+1]]
+
+        var distance = mapPoint.distanceDict[nextPoint.name]
+        totalDistance += distance;
+        
+        
+    }
+    return totalDistance;
+}
+
+module.exports={
+    calculateAllDistances,
+    calculatePath,
+    getDistance,
+    altPath
+};

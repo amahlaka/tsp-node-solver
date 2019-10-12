@@ -1,11 +1,12 @@
 var request = require('request');
 
-function getCities(){
+function getCities(callback){
     return request('https://api-staging.vello.fi/nutcracker/task', {json:true}, function(err,res,body){
         if (err) { throw(err); 
         }
-        return(body);
+        callback(body);
     });
+
 
 }
 
@@ -21,7 +22,7 @@ function postResponse(path, totalDistance, email="arttu.mahlakaarto@gmail.com", 
                 throw(err);
             }
             console.log(`statusCode: ${res.statusCode}`);
-            return(body);
+            console.log(body);
         });
 
 }

@@ -1,5 +1,5 @@
 class geoPointData{
-    constructor(name, lat, lon, index){
+    constructor(name, {"latitude":lat, "longitude":lon}, index){
         this.name = name;
         if (lat[lat.length - 1] == 'S') {
             this.lat = '-' + lat.slice(0, lat.length - 1);
@@ -9,8 +9,8 @@ class geoPointData{
         this.lon = lon;
         this.index = index;
         this.position = {"lat":this.lat, "lon":this.lon}
-        this.costMatrix = [];
-        this.nameMatrix = []; // [{name,lat,lon,index,position}]
+        this.distances = [];
+        this.distanceDict = {}; // {name,lat,lon,index,position}
         if(typeof(classDebug)!= 'undefined'){
             console.debug(this);
         }
@@ -18,6 +18,6 @@ class geoPointData{
 
 }
 
-export default {
+module.exports = {
     geoPointData
 }
